@@ -1,0 +1,31 @@
+<div class="medium-feed">
+  <div style="margin-left: 50px">
+    <h2>Articles</h2>
+    <button *ngIf="selectedArticle" (click)="backToList()" class="back-button">
+      Back to Articles
+    </button>
+  </div>
+
+  <!-- List of articles -->
+  <div *ngIf="!selectedArticle">
+    <div *ngFor="let article of articles" class="medium-article">
+      <h3>
+        <!-- <img src="generatedImageUrl" alt="ErrorGeneratingImage" /> -->
+        <a (click)="showArticle(article)" class="article-link">
+          {{ article.title }}
+        </a>
+      </h3>
+      <p class="medium-date">{{ article.pubDate | date }}</p>
+    </div>
+  </div>
+
+  <!-- Selected article content -->
+  <div *ngIf="selectedArticle" class="article-content">
+    <h1>{{ selectedArticle.title }}</h1>
+    <p class="medium-date">{{ selectedArticle.pubDate | date }}</p>
+    <div
+      class="article-html"
+      [innerHTML]="selectedArticle['content:encoded']"
+    ></div>
+  </div>
+</div>

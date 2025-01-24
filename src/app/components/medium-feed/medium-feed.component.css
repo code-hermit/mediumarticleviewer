@@ -1,0 +1,49 @@
+.medium-feed {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+.medium-article {
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+}
+
+.article-link {
+  color: #0073e6;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.article-link:hover {
+  text-decoration: underline;
+}
+
+.medium-date {
+  color: #888;
+  font-size: 0.9em;
+}
+
+.article-content {
+  margin-top: 20px;
+  margin-left: 10vw;
+}
+
+.article-html {
+  font-size: 1em;
+  color: #333;
+  line-height: 1.6;
+}
+
+.back-button {
+  background-color: #0073e6;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.back-button:hover {
+  background-color: #005bb5;
+}
