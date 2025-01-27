@@ -1,31 +1,64 @@
-<div class="medium-feed">
-  <div style="margin-left: 50px">
-    <h2>Articles</h2>
-    <button *ngIf="selectedArticle" (click)="backToList()" class="back-button">
-      Back to Articles
-    </button>
-  </div>
-
-  <!-- List of articles -->
-  <div *ngIf="!selectedArticle">
-    <div *ngFor="let article of articles" class="medium-article">
-      <h3>
-        <!-- <img src="generatedImageUrl" alt="ErrorGeneratingImage" /> -->
-        <a (click)="showArticle(article)" class="article-link">
-          {{ article.title }}
-        </a>
-      </h3>
-      <p class="medium-date">{{ article.pubDate | date }}</p>
+<div
+  style="
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100vw;
+    margin: 0;
+  "
+>
+  <div class="medium-feed">
+    <div style="margin-left: 45%">
+      <h2>Articles</h2>
+      <button
+        *ngIf="selectedArticle"
+        (click)="backToList()"
+        class="back-button"
+      >
+        Back to Articles
+      </button>
     </div>
-  </div>
 
-  <!-- Selected article content -->
-  <div *ngIf="selectedArticle" class="article-content">
-    <h1>{{ selectedArticle.title }}</h1>
-    <p class="medium-date">{{ selectedArticle.pubDate | date }}</p>
-    <div
-      class="article-html"
-      [innerHTML]="selectedArticle['content:encoded']"
-    ></div>
+    <!-- List of articles -->
+    <div *ngIf="!selectedArticle" class="article-grid">
+      <div
+        *ngFor="let article of articles"
+        class="article-card"
+        style="padding: 5px"
+      >
+        <img
+          src="{{ get_image(article.title) }}"
+          alt="Article Thumbnail"
+          (error)="onImageError($event)"
+        />
+        <h3>
+          <!-- <img src="generatedImageUrl" alt="ErrorGeneratingImage" /> -->
+        </h3>
+        <div class="article-content">
+          <h3>
+            <a (click)="showArticle(article)" class="article-link">
+              {{ article.title }}
+            </a>
+          </h3>
+          <!-- <p class="summary">
+          A Demat account is a virtual repository for your investment
+          securities. It stores holdings...
+        </p> -->
+          <span class="tag">Investing</span>
+        </div>
+        <p class="medium-date">{{ article.pubDate | date }}</p>
+      </div>
+    </div>
+
+    <!-- Selected article content -->
+    <div *ngIf="selectedArticle" class="article-content">
+      <h1>{{ selectedArticle.title }}</h1>
+      <p class="medium-date">{{ selectedArticle.pubDate | date }}</p>
+      <div
+        class="article-html"
+        [innerHTML]="selectedArticle['content:encoded']"
+      ></div>
+    </div>
   </div>
 </div>
