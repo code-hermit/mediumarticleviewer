@@ -1,16 +1,9 @@
 import { Injectable } from '@angular/core';
-import Parser from 'rss-parser';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MediumFeedService {
-  private parser: Parser = new Parser({
-    customFields: {
-      item: ['content:encoded'], // Include the full article content
-    },
-  });
-
   constructor() {}
 
   async fetchMediumFeed(username: string): Promise<any[]> {
@@ -18,11 +11,24 @@ export class MediumFeedService {
     const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(
       url
     )}`;
+
     try {
       const response = await fetch(proxyUrl);
       const data = await response.json();
-      const feed = await this.parser.parseString(data.contents);
-      return feed.items; // Array of articles with full content
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(data.contents, 'text/xml');
+
+      const items = xmlDoc.querySelectorAll('item');
+      const articles = Array.from(items).map((item) => {
+        const title = item.querySelector('title')?.textContent || '';
+        const link = item.querySelector('link')?.textContent || '';
+        const content = item.querySelector('encoded')?.textContent || ''; // Namespace handled via 'encoded'
+        const pubDate = item.querySelector('pubDate')?.textContent || '';
+
+        return { title, link, content, pubDate };
+      });
+
+      return articles;
     } catch (error) {
       console.error('Error fetching Medium feed:', error);
       return [];
